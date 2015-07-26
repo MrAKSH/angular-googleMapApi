@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="myApp" class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>My AngularJS App</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBszqo5hYL_kXoNfpG698zBmnVTCGxOxs"> </script>
+  <style>
+    #map-canvas{
+      height: 400px;
+      width: 700px;
+      border: 2px solid red;
+    }
+  </style>
+</head>
+<body>
+
+
+<my-maps id="map-canvas"></my-maps>
+
+ <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="app.js"></script>
+<script>
+  var app = angular.module('myApp',[]);
+
+  app.directive('myMaps',function(){
+    return{
+      restrict:'E',
+      template :'<div></div>',
+      replace:'true',
+      link:function(scope,element,attrs){
+        var myLatLng =  new google.maps.LatLng(28.6017204,77.0276889);
+        var mapOptions = {
+          center:myLatLng,
+          zoom: 16,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(document.getElementById(attrs.id),
+                mapOptions);
+        var marker = new google.maps.Marker({
+          position: myLatLng,
+          map: map,
+          title: 'My Home!'
+        });
+
+        marker.setMap(map);
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+      }
+
+    }
+  });
+</script>
+
+</body>
+</html>
